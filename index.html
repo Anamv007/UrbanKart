@@ -1,0 +1,620 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,700;1,9..144,900&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0F0D0A;--paper:#FAFAF8;--cream:#F4F1EC;--warm:#EDE9E2;
+  --accent:#C8501A;--accent2:#E8763A;--gold:#D4A853;--golddim:#B8923F;
+  --mid:#6B6560;--light:#9E9890;--border:#DDD9D3;
+  --green:#2A6B4A;--white:#FFFFFF;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:var(--paper);font-size:15px;line-height:1.6;overflow-x:hidden}
+h1,h2,h3{font-family:'Fraunces',serif}
+
+/* KEYFRAMES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.92)}to{opacity:1;transform:scale(1)}}
+@keyframes shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+@keyframes dotBlink{0%,100%{opacity:0.3}50%{opacity:1}}
+@keyframes borderGrow{from{width:0}to{width:100%}}
+@keyframes countUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* REVEAL on scroll — JS adds .revealed */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.revealed{opacity:1;transform:translateY(0)}
+.reveal-left{opacity:0;transform:translateX(-30px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal-left.revealed{opacity:1;transform:translateX(0)}
+.reveal-scale{opacity:0;transform:scale(0.94);transition:opacity 0.5s ease,transform 0.5s ease}
+.reveal-scale.revealed{opacity:1;transform:scale(1)}
+.delay-1{transition-delay:0.1s}.delay-2{transition-delay:0.2s}.delay-3{transition-delay:0.3s}.delay-4{transition-delay:0.4s}
+
+/* ANNOUNCE ticker */
+.ann-wrap{background:var(--ink);overflow:hidden;white-space:nowrap;padding:10px 0;position:relative}
+.ann-track{display:inline-flex;animation:ticker 30s linear infinite;gap:0}
+.ann-item{display:inline-flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,0.7);padding:0 40px;letter-spacing:0.3px}
+.ann-item strong{color:var(--gold)}
+.ann-dot{width:4px;height:4px;background:var(--accent);border-radius:50%;flex-shrink:0}
+
+/* NAV */
+nav{background:rgba(250,250,248,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:62px;position:sticky;top:0;z-index:100;animation:fadeIn 0.4s ease}
+.logo{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:var(--ink);letter-spacing:-0.5px;cursor:pointer}
+.logo span{color:var(--accent)}
+.logo em{font-style:italic;color:var(--golddim)}
+.nav-links{display:flex;gap:32px}
+.nav-link{color:var(--mid);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:0.2px;position:relative;padding-bottom:3px;transition:color 0.2s}
+.nav-link::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);border-radius:1px;transition:width 0.25s ease}
+.nav-link:hover{color:var(--ink)}.nav-link:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:14px}
+.search-pill{display:flex;align-items:center;gap:8px;background:var(--cream);border:1px solid var(--border);border-radius:22px;padding:7px 16px;font-size:13px;color:var(--mid);cursor:pointer;transition:border-color 0.2s,background 0.2s}
+.search-pill:hover{border-color:var(--accent);background:white}
+.cart-btn{background:var(--ink);color:white;font-weight:700;font-size:12px;padding:9px 20px;border-radius:22px;border:none;cursor:pointer;letter-spacing:0.3px;font-family:'Plus Jakarta Sans',sans-serif;position:relative;transition:background 0.2s,transform 0.15s}
+.cart-btn:hover{background:var(--accent);transform:scale(1.04)}
+.cart-dot{position:absolute;top:-3px;right:-3px;width:8px;height:8px;background:var(--accent);border-radius:50%;border:2px solid white;animation:pulse 2s ease infinite}
+
+/* HERO */
+.hero{background:var(--ink);display:grid;grid-template-columns:1fr 1fr;min-height:540px;overflow:hidden;position:relative}
+.hero-bg-dots{position:absolute;inset:0;opacity:0.035;background-image:radial-gradient(circle,#fff 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.hero-left{padding:72px 40px 72px 48px;display:flex;flex-direction:column;justify-content:center;position:relative;z-index:2}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(212,168,83,0.12);border:1px solid rgba(212,168,83,0.28);color:var(--gold);font-size:11px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:22px;letter-spacing:1.2px;text-transform:uppercase;width:fit-content;animation:slideRight 0.6s ease 0.2s both}
+.live-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:dotBlink 1.5s ease infinite;flex-shrink:0}
+.hero h1{font-size:52px;font-weight:900;color:white;line-height:1.0;letter-spacing:-2px;margin-bottom:20px;animation:fadeUp 0.7s ease 0.35s both}
+.hero h1 em{color:var(--accent2);font-style:italic}
+.hero-desc{color:rgba(255,255,255,0.5);font-size:15px;line-height:1.8;margin-bottom:32px;max-width:380px;animation:fadeUp 0.7s ease 0.5s both}
+.hero-actions{display:flex;gap:12px;margin-bottom:40px;animation:fadeUp 0.7s ease 0.65s both}
+.btn-fire{background:var(--accent);color:white;font-weight:700;font-size:13px;padding:14px 30px;border-radius:10px;border:none;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.2px;position:relative;overflow:hidden;transition:transform 0.15s,background 0.2s}
+.btn-fire::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,0.12);transform:translateX(-100%);transition:transform 0.3s}
+.btn-fire:hover::before{transform:translateX(0)}
+.btn-fire:hover{transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,0.65);font-size:13px;font-weight:500;padding:14px 20px;border:1px solid rgba(255,255,255,0.18);border-radius:10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:border-color 0.2s,color 0.2s,background 0.2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.4);color:white;background:rgba(255,255,255,0.05)}
+.hero-stats{display:flex;gap:0;animation:fadeUp 0.7s ease 0.8s both}
+.h-stat{padding:0 24px 0 0;border-right:1px solid rgba(255,255,255,0.1)}
+.h-stat:first-child{padding-left:0}
+.h-stat:last-child{border-right:none}
+.h-stat + .h-stat{padding-left:24px}
+.h-stat-num{font-family:'Fraunces',serif;font-size:26px;font-weight:900;color:white;line-height:1}
+.h-stat-label{font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px;letter-spacing:0.3px}
+
+.hero-right{display:flex;flex-direction:column;justify-content:center;padding:32px;gap:12px;position:relative;z-index:2;animation:fadeIn 0.9s ease 0.4s both}
+.cat-row{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:background 0.2s,border-color 0.2s,transform 0.2s}
+.cat-row:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);transform:translateX(5px)}
+.cat-icon-box{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;transition:transform 0.2s}
+.cat-row:hover .cat-icon-box{transform:scale(1.1) rotate(-5deg)}
+.cat-name{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;color:white;margin-bottom:2px}
+.cat-sub{font-size:12px;color:rgba(255,255,255,0.38)}
+.cat-arrow{margin-left:auto;color:rgba(255,255,255,0.25);font-size:20px;transition:transform 0.2s,color 0.2s}
+.cat-row:hover .cat-arrow{transform:translateX(4px);color:var(--accent2)}
+
+/* TRUST STRIP */
+.trust-strip{background:white;border-bottom:1px solid var(--border)}
+.trust-inner{max-width:1100px;margin:0 auto;padding:18px 32px;display:flex;justify-content:space-around;flex-wrap:wrap;gap:14px}
+.t-item{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;color:var(--ink);transition:transform 0.2s}
+.t-item:hover{transform:translateY(-2px)}
+.t-icon-circle{width:32px;height:32px;background:var(--cream);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:1px solid var(--border)}
+.t-label{line-height:1.2}
+.t-sub{font-size:10px;color:var(--light);font-weight:400;display:block}
+
+/* SECTION */
+.sec{padding:72px 40px}
+.sec-inner{max-width:1100px;margin:0 auto}
+.sec-tag{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.sec-h{font-size:34px;font-weight:900;color:var(--ink);letter-spacing:-0.5px;line-height:1.1;margin-bottom:4px}
+.sec-sub{font-size:14px;color:var(--mid);max-width:440px}
+.sec-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px;flex-wrap:wrap;gap:16px}
+.view-all-btn{font-size:13px;font-weight:700;color:var(--accent);text-decoration:none;display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:1px solid var(--border);border-radius:8px;transition:all 0.2s;cursor:pointer}
+.view-all-btn:hover{background:var(--accent);color:white;border-color:var(--accent)}
+
+/* PRODUCT GRID */
+.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:20px}
+.p-card{background:white;border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:transform 0.25s,box-shadow 0.25s,border-color 0.2s}
+.p-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(15,13,10,0.1);border-color:var(--accent)}
+.p-img-area{height:200px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;transition:background 0.3s}
+.p-emoji{font-size:56px;transition:transform 0.3s}
+.p-card:hover .p-emoji{transform:scale(1.15) rotate(-5deg)}
+.p-overlay{position:absolute;inset:0;background:rgba(200,80,26,0);transition:background 0.3s;display:flex;align-items:flex-end;justify-content:center;padding-bottom:16px}
+.p-card:hover .p-overlay{background:rgba(200,80,26,0.06)}
+.quick-add{background:var(--ink);color:white;border:none;font-size:12px;font-weight:700;padding:9px 20px;border-radius:8px;cursor:pointer;opacity:0;transform:translateY(8px);transition:opacity 0.25s,transform 0.25s;font-family:'Plus Jakarta Sans',sans-serif}
+.p-card:hover .quick-add{opacity:1;transform:translateY(0)}
+.p-badge{position:absolute;top:12px;left:12px;font-size:10px;font-weight:700;padding:4px 10px;border-radius:6px;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:0.5px}
+.p-wish{position:absolute;top:12px;right:12px;width:30px;height:30px;background:white;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;opacity:0;transform:scale(0.8);transition:opacity 0.25s,transform 0.25s,border-color 0.2s;cursor:pointer}
+.p-card:hover .p-wish{opacity:1;transform:scale(1)}
+.p-wish:hover{border-color:var(--accent);background:var(--cream)}
+.badge-hot{background:#0F0D0A;color:white}
+.badge-sale{background:var(--accent);color:white}
+.badge-trending{background:var(--gold);color:#5A3800}
+.p-body{padding:16px 16px 18px}
+.p-cat{font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--light);margin-bottom:5px}
+.p-name{font-weight:700;font-size:14px;color:var(--ink);margin-bottom:8px;line-height:1.4}
+.p-rating{display:flex;align-items:center;gap:6px;margin-bottom:12px}
+.stars{color:var(--gold);font-size:12px;letter-spacing:1px}
+.r-cnt{font-size:11px;color:var(--light)}
+.p-footer{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.prices{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+.price{font-family:'Fraunces',serif;font-weight:700;font-size:19px;color:var(--ink)}
+.mrp{font-size:12px;color:var(--light);text-decoration:line-through}
+.save-tag{font-size:10px;font-weight:700;color:#1A5C35;background:#DFF0E8;padding:3px 7px;border-radius:4px}
+.add-btn{background:var(--ink);color:white;border:none;font-size:11px;font-weight:700;padding:9px 15px;border-radius:8px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;transition:background 0.2s,transform 0.15s}
+.add-btn:hover{background:var(--accent);transform:scale(1.05)}
+
+/* CATEGORIES */
+.cats-sec{padding:64px 40px;background:var(--cream)}
+.cats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.cat-card{background:white;border:1px solid var(--border);border-radius:18px;padding:32px 20px;text-align:center;cursor:pointer;transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;position:relative;overflow:hidden}
+.cat-card::before{content:'';position:absolute;inset:0;background:var(--accent);transform:scaleY(0);transform-origin:bottom;transition:transform 0.3s ease;z-index:0}
+.cat-card:hover::before{transform:scaleY(1)}
+.cat-card:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(200,80,26,0.18)}
+.cat-card * {position:relative;z-index:1}
+.cat-em{font-size:38px;margin-bottom:14px;display:block;transition:transform 0.3s}
+.cat-card:hover .cat-em{transform:scale(1.2) rotate(-8deg)}
+.cat-title{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:15px;color:var(--ink);margin-bottom:4px;transition:color 0.3s}
+.cat-card:hover .cat-title{color:white}
+.cat-cnt{font-size:12px;color:var(--mid);transition:color 0.3s}
+.cat-card:hover .cat-cnt{color:rgba(255,255,255,0.7)}
+
+/* WHY US */
+.why-sec{background:var(--ink);padding:80px 40px}
+.why-inner{max-width:1100px;margin:0 auto}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+.why-card{border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:28px;cursor:default;transition:border-color 0.3s,background 0.3s,transform 0.3s}
+.why-card:hover{border-color:rgba(200,80,26,0.4);background:rgba(200,80,26,0.05);transform:translateY(-4px)}
+.why-ico{font-size:28px;margin-bottom:16px;display:block;transition:transform 0.3s}
+.why-card:hover .why-ico{transform:scale(1.2) rotate(-8deg)}
+.why-t{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:15px;color:white;margin-bottom:8px}
+.why-d{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.75}
+
+/* REVIEWS */
+.reviews-sec{padding:80px 40px;background:var(--paper)}
+.r-summary{background:white;border:1px solid var(--border);border-radius:18px;padding:28px 32px;display:flex;align-items:center;gap:48px;margin-bottom:28px;flex-wrap:wrap}
+.r-big{font-family:'Fraunces',serif;font-size:56px;font-weight:900;color:var(--ink);line-height:1}
+.r-stars-big{color:var(--gold);font-size:22px;letter-spacing:3px;display:block;margin:4px 0 6px}
+.r-total{font-size:13px;color:var(--mid)}
+.r-bars{flex:1;min-width:220px}
+.r-bar-row{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--mid);margin-bottom:7px}
+.r-track{flex:1;height:6px;background:var(--warm);border-radius:3px;overflow:hidden}
+.r-fill{height:100%;background:var(--gold);border-radius:3px;width:0;transition:width 1.2s ease}
+.r-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.r-card{background:white;border:1px solid var(--border);border-radius:16px;padding:22px;transition:transform 0.2s,box-shadow 0.2s}
+.r-card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,0,0,0.07)}
+.r-card-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:12px}
+.r-quote{font-size:14px;color:var(--mid);line-height:1.75;margin-bottom:16px}
+.r-author{display:flex;align-items:center;gap:10px;padding-top:14px;border-top:1px solid var(--border)}
+.r-av{width:36px;height:36px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:900;font-size:13px;color:var(--mid);flex-shrink:0}
+.r-n{font-weight:700;font-size:13px;color:var(--ink)}
+.r-m{font-size:11px;color:var(--light);display:flex;align-items:center;gap:5px}
+.ver{color:var(--green);font-weight:700}
+
+/* FAQ */
+.faq-sec{padding:72px 40px;background:var(--cream)}
+.faq-wrap{max-width:680px;margin:36px auto 0}
+.faq-item{background:white;border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;transition:border-color 0.2s}
+.faq-item.open{border-color:var(--accent)}
+.faq-q{padding:18px 22px;font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--ink);transition:color 0.2s;user-select:none}
+.faq-item.open .faq-q{color:var(--accent)}
+.faq-icon{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;color:var(--mid);transition:transform 0.3s,background 0.2s,border-color 0.2s;flex-shrink:0}
+.faq-item.open .faq-icon{transform:rotate(45deg);background:var(--accent);border-color:var(--accent);color:white}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.4s ease,padding 0.3s}
+.faq-a-inner{padding:0 22px 18px;font-size:13px;color:var(--mid);line-height:1.8}
+
+/* CONTACT */
+.contact-sec{background:var(--accent);padding:52px 40px}
+.c-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:28px}
+.c-title{font-family:'Fraunces',serif;font-size:28px;font-weight:900;color:white;letter-spacing:-0.3px;line-height:1.2}
+.c-sub{font-size:14px;color:rgba(255,255,255,0.65);margin-top:5px}
+.c-btns{display:flex;gap:14px;flex-wrap:wrap}
+.c-btn{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:12px;padding:12px 20px;cursor:pointer;transition:background 0.2s,transform 0.15s}
+.c-btn:hover{background:rgba(255,255,255,0.25);transform:translateY(-2px)}
+.c-btn-ico{font-size:18px}
+.c-btn-label{font-size:12px;font-weight:700;color:white;display:block}
+.c-btn-sub{font-size:11px;color:rgba(255,255,255,0.6);display:block}
+
+/* FOOTER */
+footer{background:#0A0906;padding:56px 40px 28px}
+.f-inner{max-width:1100px;margin:0 auto}
+.f-top{display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr;gap:44px;margin-bottom:48px}
+.f-brand{font-family:'Fraunces',serif;font-size:24px;font-weight:900;color:white;margin-bottom:12px}
+.f-brand span{color:var(--accent2)}
+.f-tagline{font-size:13px;color:rgba(255,255,255,0.38);line-height:1.8;margin-bottom:22px}
+.f-contact-lines{display:flex;flex-direction:column;gap:7px}
+.f-cl{font-size:12px;color:rgba(255,255,255,0.38);display:flex;align-items:flex-start;gap:9px}
+.f-cl strong{color:rgba(255,255,255,0.65)}
+.f-col h5{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:16px}
+.f-link{display:block;font-size:13px;color:rgba(255,255,255,0.45);text-decoration:none;margin-bottom:10px;transition:color 0.2s;cursor:pointer}
+.f-link:hover{color:rgba(255,255,255,0.85)}
+.f-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.f-copy{font-size:12px;color:rgba(255,255,255,0.22)}
+.f-gst{font-size:11px;color:rgba(255,255,255,0.16);margin-top:4px}
+.pay-row{display:flex;gap:8px;flex-wrap:wrap}
+.pay-chip{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.45);font-size:10px;font-weight:700;padding:5px 11px;border-radius:5px;letter-spacing:0.4px;font-family:'Plus Jakarta Sans',sans-serif}
+</style>
+
+<div class="ann-wrap">
+  <div class="ann-track">
+    <span class="ann-item"><span class="ann-dot"></span> Use code <strong>FIRST10</strong> for 10% off your first order</span>
+    <span class="ann-item"><span class="ann-dot"></span> Free Shipping on orders above <strong>₹499</strong></span>
+    <span class="ann-item"><span class="ann-dot"></span> <strong>COD Available</strong> PAN India — Pay on Delivery</span>
+    <span class="ann-item"><span class="ann-dot"></span> 30-Day Easy Returns — <strong>No Questions Asked</strong></span>
+    <span class="ann-item"><span class="ann-dot"></span> Delivered in <strong>5–7 Business Days</strong> across India</span>
+    <span class="ann-item"><span class="ann-dot"></span> Use code <strong>FIRST10</strong> for 10% off your first order</span>
+    <span class="ann-item"><span class="ann-dot"></span> Free Shipping on orders above <strong>₹499</strong></span>
+    <span class="ann-item"><span class="ann-dot"></span> <strong>COD Available</strong> PAN India — Pay on Delivery</span>
+    <span class="ann-item"><span class="ann-dot"></span> 30-Day Easy Returns — <strong>No Questions Asked</strong></span>
+    <span class="ann-item"><span class="ann-dot"></span> Delivered in <strong>5–7 Business Days</strong> across India</span>
+  </div>
+</div>
+
+<nav>
+  <div class="logo">Urban<span>K</span><em>art</em></div>
+  <div class="nav-links">
+    <a class="nav-link" href="#">Home</a>
+    <a class="nav-link" href="#">Shop All</a>
+    <a class="nav-link" href="#">Best Sellers</a>
+    <a class="nav-link" href="#">About Us</a>
+    <a class="nav-link" href="#">Contact</a>
+  </div>
+  <div class="nav-right">
+    <div class="search-pill">🔍 &nbsp;Search...</div>
+    <button class="cart-btn"><div class="cart-dot"></div>🛒 &nbsp;Cart (0)</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg-dots"></div>
+  <div class="hero-left">
+    <div class="eyebrow"><span class="live-dot"></span> Trusted by 10,000+ Indian Homes</div>
+    <h1>The stuff your<br>home <em>actually</em><br>needs.</h1>
+    <p class="hero-desc">From home essentials to health & wellness — UrbanKart curates products that genuinely work. No gimmicks. Just quality you can feel.</p>
+    <div class="hero-actions">
+      <button class="btn-fire">Shop Best Sellers &nbsp;→</button>
+      <button class="btn-ghost">Browse Categories</button>
+    </div>
+    <div class="hero-stats">
+      <div class="h-stat"><div class="h-stat-num" id="sc1">0</div><div class="h-stat-label">Happy Customers</div></div>
+      <div class="h-stat"><div class="h-stat-num">4.8★</div><div class="h-stat-label">Avg. Rating</div></div>
+      <div class="h-stat"><div class="h-stat-num" id="sc2">0</div><div class="h-stat-label">Cities Delivered</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="cat-row reveal-left delay-1">
+      <div class="cat-icon-box" style="background:rgba(200,80,26,0.15)">🏠</div>
+      <div><div class="cat-name">Home Essentials</div><div class="cat-sub">28 products · From ₹299</div></div>
+      <div class="cat-arrow">›</div>
+    </div>
+    <div class="cat-row reveal-left delay-2">
+      <div class="cat-icon-box" style="background:rgba(42,107,74,0.15)">💪</div>
+      <div><div class="cat-name">Health & Wellness</div><div class="cat-sub">19 products · From ₹399</div></div>
+      <div class="cat-arrow">›</div>
+    </div>
+    <div class="cat-row reveal-left delay-3">
+      <div class="cat-icon-box" style="background:rgba(212,168,83,0.15)">✨</div>
+      <div><div class="cat-name">Beauty & Personal Care</div><div class="cat-sub">16 products · From ₹499</div></div>
+      <div class="cat-arrow">›</div>
+    </div>
+    <div class="cat-row reveal-left delay-4">
+      <div class="cat-icon-box" style="background:rgba(60,100,200,0.15)">🚗</div>
+      <div><div class="cat-name">Fitness & Auto</div><div class="cat-sub">14 products · From ₹599</div></div>
+      <div class="cat-arrow">›</div>
+    </div>
+  </div>
+</div>
+
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="t-item"><div class="t-icon-circle">🚚</div><div class="t-label">Free Delivery<span class="t-sub">Orders above ₹499</span></div></div>
+    <div class="t-item"><div class="t-icon-circle">💵</div><div class="t-label">Cash on Delivery<span class="t-sub">Pay when it arrives</span></div></div>
+    <div class="t-item"><div class="t-icon-circle">↩</div><div class="t-label">30-Day Returns<span class="t-sub">Hassle-free</span></div></div>
+    <div class="t-item"><div class="t-icon-circle">🔒</div><div class="t-label">Secure Checkout<span class="t-sub">Razorpay encrypted</span></div></div>
+    <div class="t-item"><div class="t-icon-circle">📦</div><div class="t-label">5–7 Day Delivery<span class="t-sub">PAN India</span></div></div>
+  </div>
+</div>
+
+<section class="sec" style="background:var(--paper)">
+  <div class="sec-inner">
+    <div class="sec-hd reveal">
+      <div><div class="sec-tag">Most Loved</div><div class="sec-h">Best Sellers This Week</div></div>
+      <div class="view-all-btn">View All 77 Products →</div>
+    </div>
+    <div class="p-grid">
+      <div class="p-card reveal delay-1">
+        <div class="p-img-area" style="background:#F4F0E8">
+          <span class="p-badge badge-hot">🔥 BEST SELLER</span>
+          <div class="p-wish">♡</div>
+          <div class="p-emoji">🧹</div>
+          <div class="p-overlay"><button class="quick-add">Quick Add</button></div>
+        </div>
+        <div class="p-body">
+          <div class="p-cat">Home Essentials</div>
+          <div class="p-name">3-in-1 Mini Rechargeable Car Vacuum Cleaner</div>
+          <div class="p-rating"><span class="stars">★★★★★</span><span class="r-cnt">(142)</span></div>
+          <div class="p-footer"><div class="prices"><span class="price">₹699</span><span class="mrp">₹1,299</span><span class="save-tag">46% OFF</span></div><button class="add-btn">Add →</button></div>
+        </div>
+      </div>
+      <div class="p-card reveal delay-2">
+        <div class="p-img-area" style="background:#EDF3EE">
+          <span class="p-badge badge-sale">SALE</span>
+          <div class="p-wish">♡</div>
+          <div class="p-emoji">🛏</div>
+          <div class="p-overlay"><button class="quick-add">Quick Add</button></div>
+        </div>
+        <div class="p-body">
+          <div class="p-cat">Home Essentials</div>
+          <div class="p-name">BEDMORE CloudTop Mattress Pad — Hotel Quality</div>
+          <div class="p-rating"><span class="stars">★★★★★</span><span class="r-cnt">(203)</span></div>
+          <div class="p-footer"><div class="prices"><span class="price">₹999</span><span class="mrp">₹1,999</span><span class="save-tag">50% OFF</span></div><button class="add-btn">Add →</button></div>
+        </div>
+      </div>
+      <div class="p-card reveal delay-3">
+        <div class="p-img-area" style="background:#FDF3EE">
+          <span class="p-badge badge-trending">TRENDING</span>
+          <div class="p-wish">♡</div>
+          <div class="p-emoji">💅</div>
+          <div class="p-overlay"><button class="quick-add">Quick Add</button></div>
+        </div>
+        <div class="p-body">
+          <div class="p-cat">Beauty & Personal Care</div>
+          <div class="p-name">12-Color Nail Art Pen Set — Pro Designs at Home</div>
+          <div class="p-rating"><span class="stars">★★★★★</span><span class="r-cnt">(67)</span></div>
+          <div class="p-footer"><div class="prices"><span class="price">₹899</span><span class="mrp">₹1,699</span><span class="save-tag">47% OFF</span></div><button class="add-btn">Add →</button></div>
+        </div>
+      </div>
+      <div class="p-card reveal delay-4">
+        <div class="p-img-area" style="background:#F0F4F8">
+          <span class="p-badge badge-hot">NEW DROP</span>
+          <div class="p-wish">♡</div>
+          <div class="p-emoji">🧴</div>
+          <div class="p-overlay"><button class="quick-add">Quick Add</button></div>
+        </div>
+        <div class="p-body">
+          <div class="p-cat">Health & Wellness</div>
+          <div class="p-name">Active Enzyme Laundry Stain Remover (Pack of 2)</div>
+          <div class="p-rating"><span class="stars">★★★★☆</span><span class="r-cnt">(89)</span></div>
+          <div class="p-footer"><div class="prices"><span class="price">₹499</span></div><button class="add-btn">Add →</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cats-sec">
+  <div class="sec-inner">
+    <div style="text-align:center" class="reveal">
+      <div class="sec-tag" style="display:inline-block">Browse by Category</div>
+      <div class="sec-h" style="margin-top:8px">What are you looking for?</div>
+    </div>
+    <div class="cats-grid">
+      <div class="cat-card reveal delay-1"><span class="cat-em">🏠</span><div class="cat-title">Home Essentials</div><div class="cat-cnt">28 products</div></div>
+      <div class="cat-card reveal delay-2"><span class="cat-em">💪</span><div class="cat-title">Health & Wellness</div><div class="cat-cnt">19 products</div></div>
+      <div class="cat-card reveal delay-3"><span class="cat-em">✨</span><div class="cat-title">Beauty & Personal Care</div><div class="cat-cnt">16 products</div></div>
+      <div class="cat-card reveal delay-4"><span class="cat-em">🚗</span><div class="cat-title">Fitness & Auto</div><div class="cat-cnt">14 products</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="why-sec">
+  <div class="why-inner">
+    <div class="reveal">
+      <div class="sec-tag" style="color:var(--gold)">Why UrbanKart?</div>
+      <div class="sec-h" style="color:white;font-size:36px;max-width:480px;margin-top:8px">Why 10,000+ Indians shop here</div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal delay-1"><span class="why-ico">🚚</span><div class="why-t">Delivered in 5–7 Days, Anywhere</div><div class="why-d">We ship from Delhi to 18,000+ pin codes. Real tracking via SMS & WhatsApp — no guesswork.</div></div>
+      <div class="why-card reveal delay-2"><span class="why-ico">💵</span><div class="why-t">Pay on Delivery — Zero Risk</div><div class="why-d">Not comfortable paying online? Don't. Order COD and pay only when your package is in your hands.</div></div>
+      <div class="why-card reveal delay-3"><span class="why-ico">✅</span><div class="why-t">Every Product Quality-Checked</div><div class="why-d">Each item goes through a 10-point inspection before packaging. If it doesn't pass, it doesn't ship.</div></div>
+      <div class="why-card reveal delay-1"><span class="why-ico">↩</span><div class="why-t">30-Day Hassle-Free Returns</div><div class="why-d">Not 100% happy? Return within 30 days. We pick it up from your home and refund you fully.</div></div>
+      <div class="why-card reveal delay-2"><span class="why-ico">📞</span><div class="why-t">Real Humans, Not Bots</div><div class="why-d">WhatsApp or call +91 98765 43210. Real people, Mon–Sat, 10AM–7PM IST. Under 2hr response.</div></div>
+      <div class="why-card reveal delay-3"><span class="why-ico">🏷</span><div class="why-t">Honest Pricing, Always</div><div class="why-d">We show real discounts, not inflated MRPs. What you see is what the product is genuinely worth — less.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews-sec">
+  <div class="sec-inner">
+    <div class="sec-hd reveal">
+      <div><div class="sec-tag">Customer Reviews</div><div class="sec-h">Real people. Real purchases.</div></div>
+    </div>
+    <div class="r-summary reveal">
+      <div>
+        <div class="r-big" id="rating-num">0</div>
+        <span class="r-stars-big">★★★★★</span>
+        <span class="r-total">Based on 1,240+ verified reviews</span>
+      </div>
+      <div class="r-bars">
+        <div class="r-bar-row">5★<div class="r-track"><div class="r-fill" data-width="78%"></div></div>78%</div>
+        <div class="r-bar-row">4★<div class="r-track"><div class="r-fill" data-width="14%"></div></div>14%</div>
+        <div class="r-bar-row">3★<div class="r-track"><div class="r-fill" data-width="5%"></div></div>5%</div>
+        <div class="r-bar-row">2★<div class="r-track"><div class="r-fill" data-width="2%"></div></div>2%</div>
+        <div class="r-bar-row">1★<div class="r-track"><div class="r-fill" data-width="1%"></div></div>1%</div>
+      </div>
+    </div>
+    <div class="r-grid">
+      <div class="r-card reveal delay-1">
+        <div class="r-card-stars">★★★★★</div>
+        <div class="r-quote">"Ordered the mattress pad COD. Delivery in 4 days in Lucknow — faster than expected. Quality is way better than the price suggests. Sleeping so much better now."</div>
+        <div class="r-author"><div class="r-av">RK</div><div><div class="r-n">Rohit Kaushik</div><div class="r-m"><span class="ver">✓ Verified</span> · Lucknow, UP · 3 weeks ago</div></div></div>
+      </div>
+      <div class="r-card reveal delay-2">
+        <div class="r-card-stars">★★★★★</div>
+        <div class="r-quote">"The car vacuum is small but surprisingly powerful. Used it on my Maruti and got into every corner. Battery life is solid too. Very happy with this purchase."</div>
+        <div class="r-author"><div class="r-av">SP</div><div><div class="r-n">Sushant Patil</div><div class="r-m"><span class="ver">✓ Verified</span> · Pune, MH · 5 weeks ago</div></div></div>
+      </div>
+      <div class="r-card reveal delay-3">
+        <div class="r-card-stars">★★★★☆</div>
+        <div class="r-quote">"Was nervous about COD but it all went smoothly. Got WhatsApp tracking updates which was really nice. Nail pens work great — my daughter loves them."</div>
+        <div class="r-author"><div class="r-av">NJ</div><div><div class="r-n">Neelam Joshi</div><div class="r-m"><span class="ver">✓ Verified</span> · Jaipur, RJ · 2 weeks ago</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="faq-sec">
+  <div class="sec-inner">
+    <div style="text-align:center" class="reveal">
+      <div class="sec-tag" style="display:inline-block">Got Questions?</div>
+      <div class="sec-h" style="margin-top:8px">We've got answers.</div>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item">
+        <div class="faq-q">Is Cash on Delivery (COD) really available? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes — COD is available on all orders across India. No advance payment needed. Just pay the delivery person when your order arrives at your door.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How long does delivery take? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">5–7 business days across India. Metro cities usually receive in 3–5 days. You'll get live tracking via SMS and WhatsApp once your order ships.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What's your return policy? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">30 days from delivery. If the product is damaged or not as expected — WhatsApp us and we'll arrange a free pickup and full refund. No questions asked.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Are your products genuine? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">We source from verified Indian distributors and manufacturers. Every product is inspected before shipping. No counterfeits, no fakes — ever.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How do I track my order? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Once your order ships, you'll get an SMS and WhatsApp message with a tracking link. You can also email support@urbankart.in with your order number.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="contact-sec">
+  <div class="c-inner reveal">
+    <div>
+      <div class="c-title">We're here when<br>you need us.</div>
+      <div class="c-sub">Real support from real people. No chatbots, no wait lines.</div>
+    </div>
+    <div class="c-btns">
+      <div class="c-btn"><span class="c-btn-ico">📞</span><div><span class="c-btn-label">+91 98765 43210</span><span class="c-btn-sub">Mon–Sat, 10AM–7PM</span></div></div>
+      <div class="c-btn"><span class="c-btn-ico">💬</span><div><span class="c-btn-label">WhatsApp Support</span><span class="c-btn-sub">Fastest response</span></div></div>
+      <div class="c-btn"><span class="c-btn-ico">✉️</span><div><span class="c-btn-label">support@urbankart.in</span><span class="c-btn-sub">Reply within 24 hrs</span></div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="f-inner">
+    <div class="f-top">
+      <div>
+        <div class="f-brand">Urban<span>Kart</span></div>
+        <div class="f-tagline">Your trusted online store for home essentials, health products, beauty and more. Quality you can trust. Prices you'll love.</div>
+        <div class="f-contact-lines">
+          <div class="f-cl">📍 <span><strong>42, Nehru Place Market, New Delhi – 110019</strong></span></div>
+          <div class="f-cl">📞 <strong>+91 98765 43210</strong></div>
+          <div class="f-cl">✉️ <strong>support@urbankart.in</strong></div>
+          <div class="f-cl">🕐 Mon–Sat, 10AM – 7PM IST</div>
+        </div>
+        <div class="f-gst" style="margin-top:14px">GST No: 07AABCU1234A1ZK (add your actual GSTIN)</div>
+      </div>
+      <div><h5>Shop</h5><a class="f-link">Home Essentials</a><a class="f-link">Health & Wellness</a><a class="f-link">Beauty & Care</a><a class="f-link">Fitness & Auto</a><a class="f-link">All Products</a></div>
+      <div><h5>Help</h5><a class="f-link">Track My Order</a><a class="f-link">Return & Refund</a><a class="f-link">Shipping Info</a><a class="f-link">FAQs</a><a class="f-link">Contact Us</a></div>
+      <div><h5>Company</h5><a class="f-link">About UrbanKart</a><a class="f-link">Privacy Policy</a><a class="f-link">Terms of Service</a><a class="f-link">Refund Policy</a></div>
+    </div>
+    <div class="f-bottom">
+      <div><div class="f-copy">© 2025 UrbanKart. All rights reserved. Proudly Indian 🇮🇳</div></div>
+      <div class="pay-row"><div class="pay-chip">UPI</div><div class="pay-chip">COD</div><div class="pay-chip">Razorpay</div><div class="pay-chip">Visa</div><div class="pay-chip">Mastercard</div><div class="pay-chip">RuPay</div></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('revealed');
+      if(e.target.querySelector('.r-fill')){
+        setTimeout(()=>{
+          e.target.querySelectorAll('.r-fill').forEach(b=>{
+            b.style.width = b.dataset.width;
+          });
+        },200);
+      }
+    }
+  });
+},{threshold:0.12});
+
+document.querySelectorAll('.reveal,.reveal-left,.reveal-scale').forEach(el=>io.observe(el));
+
+function animCount(el,target,suffix,dur){
+  let start=null;
+  const step=ts=>{
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/dur,1);
+    const eased=1-Math.pow(1-p,3);
+    el.textContent=Math.round(eased*target)+(suffix||'');
+    if(p<1)requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+const statsObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    animCount(document.getElementById('sc1'),10000,'K+',1800);
+    animCount(document.getElementById('sc2'),180,'+',1400);
+    statsObs.disconnect();
+  }
+},{threshold:0.5});
+const statsEl=document.querySelector('.hero-stats');
+if(statsEl)statsObs.observe(statsEl);
+
+const ratingObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){
+    let v=0;const target=4.8;const el=document.getElementById('rating-num');
+    if(!el){ratingObs.disconnect();return;}
+    const t=setInterval(()=>{
+      v=Math.min(v+0.1,target);
+      el.textContent=v.toFixed(1);
+      if(v>=target)clearInterval(t);
+    },60);
+    ratingObs.disconnect();
+  }
+},{threshold:0.3});
+const rEl=document.getElementById('rating-num');
+if(rEl)ratingObs.observe(rEl);
+
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.parentElement;
+    const ans=item.querySelector('.faq-a');
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>{
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight='0';
+      i.querySelector('.faq-a').style.padding='0';
+    });
+    if(!isOpen){
+      item.classList.add('open');
+      ans.style.maxHeight=ans.scrollHeight+40+'px';
+    }
+  });
+});
+
+document.querySelectorAll('.p-wish').forEach(w=>{
+  w.addEventListener('click',e=>{
+    e.stopPropagation();
+    w.style.color=w.textContent==='♡'?'#C8501A':'inherit';
+    w.textContent=w.textContent==='♡'?'♥':'♡';
+    w.style.borderColor=w.textContent==='♥'?'#C8501A':'';
+  });
+});
+
+document.querySelectorAll('.add-btn, .quick-add').forEach(b=>{
+  b.addEventListener('click',e=>{
+    e.stopPropagation();
+    const orig=b.textContent;
+    b.textContent='✓ Added!';
+    b.style.background='#2A6B4A';
+    setTimeout(()=>{b.textContent=orig;b.style.background='';},1800);
+    const dot=document.querySelector('.cart-dot');
+    if(dot){dot.style.animation='none';void dot.offsetWidth;dot.style.animation='pulse 0.3s ease';}
+  });
+});
+
+document.querySelector('.hero-right')?.querySelectorAll('.cat-row').forEach((r,i)=>{
+  setTimeout(()=>r.classList.add('revealed'),300+i*120);
+});
+</script>
