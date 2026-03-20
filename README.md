@@ -89,6 +89,7 @@ It can be customized and converted into a fully functional eCommerce store using
 Full Stack Developer
 
 📧 Email: workpaisagaurav@gmail.com
+
 🌐 Portfolio: https://anamv007.github.io/Gaurav-dev-portfolio/
 
 ---
